@@ -1,0 +1,27 @@
+#!/bin/sh
+
+./scripts/update-submodule.sh src/main/java/frc/RebeLib
+
+./scripts/check-gradlew.sh
+if [ $? -ne 0 ]; then
+  exit 1
+fi
+
+echo ""
+echo "Building..."
+./gradlew assemble -x eventDeploy
+if [ $? -ne 0 ]; then
+  echo "Error: Build failed. Please fix the errors before committing."
+  exit 1
+fi
+
+echo ""
+echo "Running tests..."
+./gradlew test -x eventDeploy
+if [ $? -ne 0 ]; then
+  echo "Error: Tests failed. Please fix the errors before committing."
+  exit 1
+fi
+
+echo ""
+exit 0
