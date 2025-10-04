@@ -18,8 +18,9 @@ import frc.RebeLib.subsystems.drive.GyroIOPigeon2;
 import frc.RebeLib.subsystems.drive.ModuleIO;
 import frc.RebeLib.subsystems.drive.ModuleIOSim;
 import frc.RebeLib.subsystems.drive.ModuleIOTalonFXandFXS;
-import frc.RebeLib.subsystems.drive.Intake.IntakeSubsystem;
 import frc.robot.generated.TunerConstants;
+import frc.robot.subsystems.Intake.IntakeSubsystem;
+
 import org.littletonrobotics.junction.networktables.LoggedDashboardChooser;
 
 /**
