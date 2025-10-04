@@ -18,6 +18,7 @@ import frc.RebeLib.subsystems.drive.GyroIOPigeon2;
 import frc.RebeLib.subsystems.drive.ModuleIO;
 import frc.RebeLib.subsystems.drive.ModuleIOSim;
 import frc.RebeLib.subsystems.drive.ModuleIOTalonFXandFXS;
+import frc.RebeLib.subsystems.drive.Intake.IntakeSubsystem;
 import frc.robot.generated.TunerConstants;
 import org.littletonrobotics.junction.networktables.LoggedDashboardChooser;
 
@@ -29,6 +30,7 @@ import org.littletonrobotics.junction.networktables.LoggedDashboardChooser;
  */
 public class RobotContainer {
     // Subsystems
+    private final IntakeSubsystem mIntake;
     private final Drive drive;
 
     // Controller
@@ -39,6 +41,7 @@ public class RobotContainer {
 
     /** The container for the robot. Contains subsystems, OI devices, and commands. */
     public RobotContainer() {
+        mIntake = new IntakeSubsystem();
         switch (Constants.currentMode) {
             case REAL:
                 // Real robot, instantiate hardware IO implementations
@@ -84,6 +87,7 @@ public class RobotContainer {
 
         // Configure the button bindings
         configureButtonBindings();
+        configureIntakeBindings();
     }
 
     /**
@@ -113,6 +117,13 @@ public class RobotContainer {
                                 () -> drive.setPose(new Pose2d(drive.getPose().getTranslation(), new Rotation2d())),
                                 drive)
                         .ignoringDisable(true));
+
+    }
+
+    private void configureIntakeBindings(){
+        controller
+                .leftBumper()
+                .whileTrue(mIntake.intakeCmd());
     }
 
     /**
