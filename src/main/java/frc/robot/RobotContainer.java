@@ -123,8 +123,14 @@ public class RobotContainer {
 
     private void configureIntakeBindings(){
         controller
-                .leftBumper()
+                .x()
                 .whileTrue(mIntake.intakeCmd());
+        controller
+                .leftBumper()
+                .whileTrue(mIntake.setIntakePivotUpCmd());
+        controller
+                .rightBumper()
+                .whileTrue(mIntake.setIntakePivotDownCmd());
     }
 
     /**
