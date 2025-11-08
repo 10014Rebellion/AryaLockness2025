@@ -1,0 +1,9 @@
+frc.RebeLib.commands
+frc.RebeLib.subsystems.drive
+frc.RebeLib.util
+frc.robot
+frc.robot.generated
+frc.robot.subsystems.Claw
+frc.robot.subsystems.Elevator
+frc.robot.subsystems.Intake
+frc.robot.subsystems.Wrist
