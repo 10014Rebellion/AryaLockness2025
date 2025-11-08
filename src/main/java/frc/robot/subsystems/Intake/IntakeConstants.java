@@ -1,3 +1,5 @@
+// REBELLION 10014
+
 package frc.robot.subsystems.Intake;
 
 import com.revrobotics.spark.SparkLowLevel.MotorType;
@@ -6,7 +8,7 @@ import com.revrobotics.spark.config.SparkFlexConfig;
 import com.revrobotics.spark.config.SparkMaxConfig;
 
 public class IntakeConstants {
-    
+
     public static int kFrontSensorDIOPort = 3;
     public static int kBackSensorDIOPort = 4;
 
@@ -22,12 +24,11 @@ public class IntakeConstants {
 
     public static double kPositionConversionFactor = 360.0;
 
-    
     static {
         kIndexerConfig.idleMode(kIdleMode).smartCurrentLimit(60).inverted(kInverted);
     }
 
-    public static class IntakePivot{
+    public static class IntakePivot {
 
         public static int kPivotID = 53;
         public static MotorType kMotorType = MotorType.kBrushless;
@@ -38,11 +39,10 @@ public class IntakeConstants {
         public static SparkMaxConfig kPivotConfig = new SparkMaxConfig();
 
         public static double kForwardSoftLimit = 90.0;
-        public static double kReverseSoftLimit = 2.0; 
+        public static double kReverseSoftLimit = 2.0;
 
         static {
             kPivotConfig.idleMode(kIdleMode).smartCurrentLimit(60).inverted(false);
         }
-
     }
 }

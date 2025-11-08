@@ -20,7 +20,6 @@ import frc.RebeLib.subsystems.drive.ModuleIOSim;
 import frc.RebeLib.subsystems.drive.ModuleIOTalonFXandFXS;
 import frc.robot.generated.TunerConstants;
 import frc.robot.subsystems.Intake.IntakeSubsystem;
-
 import org.littletonrobotics.junction.networktables.LoggedDashboardChooser;
 
 /**
@@ -118,19 +117,12 @@ public class RobotContainer {
                                 () -> drive.setPose(new Pose2d(drive.getPose().getTranslation(), new Rotation2d())),
                                 drive)
                         .ignoringDisable(true));
-
     }
 
-    private void configureIntakeBindings(){
-        controller
-                .x()
-                .whileTrue(mIntake.intakeCmd());
-        controller
-                .leftBumper()
-                .whileTrue(mIntake.setIntakePivotUpCmd());
-        controller
-                .rightBumper()
-                .whileTrue(mIntake.setIntakePivotDownCmd());
+    private void configureIntakeBindings() {
+        controller.x().whileTrue(mIntake.intakeCmd());
+        controller.leftBumper().whileTrue(mIntake.setIntakePivotUpCmd());
+        controller.rightBumper().whileTrue(mIntake.setIntakePivotDownCmd());
     }
 
     /**

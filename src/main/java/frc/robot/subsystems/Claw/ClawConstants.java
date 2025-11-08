@@ -1,0 +1,19 @@
+package frc.robot.subsystems.Claw;
+
+import com.revrobotics.spark.SparkLowLevel.MotorType;
+import com.revrobotics.spark.config.SparkBaseConfig.IdleMode;
+import com.revrobotics.spark.config.SparkFlexConfig;
+
+public class ClawConstants {
+    public static int kClawID = 42;
+    public static MotorType kMotorType = MotorType.kBrushless;
+    public static IdleMode kIdleMode = IdleMode.kCoast;
+    public static boolean kInverted = true;
+    public static int kSmartCurrentLimit = 60;
+    public static SparkFlexConfig kClawConfig = new SparkFlexConfig();
+
+    static {
+        kClawConfig.idleMode(kIdleMode).smartCurrentLimit(60).inverted(kInverted);
+    }
+    
+}
