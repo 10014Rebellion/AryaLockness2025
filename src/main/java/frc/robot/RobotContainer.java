@@ -19,6 +19,8 @@ import frc.RebeLib.subsystems.drive.ModuleIO;
 import frc.RebeLib.subsystems.drive.ModuleIOSim;
 import frc.RebeLib.subsystems.drive.ModuleIOTalonFXandFXS;
 import frc.robot.generated.TunerConstants;
+import frc.robot.subsystems.Elevator.ElevatorConstants;
+import frc.robot.subsystems.Elevator.ElevatorSubsystem;
 import frc.robot.subsystems.Intake.IntakeSubsystem;
 import org.littletonrobotics.junction.networktables.LoggedDashboardChooser;
 
@@ -31,6 +33,7 @@ import org.littletonrobotics.junction.networktables.LoggedDashboardChooser;
 public class RobotContainer {
     // Subsystems
     private final IntakeSubsystem mIntake;
+    private final ElevatorSubsystem mElevator;
     private final Drive drive;
 
     // Controller
@@ -42,6 +45,7 @@ public class RobotContainer {
     /** The container for the robot. Contains subsystems, OI devices, and commands. */
     public RobotContainer() {
         mIntake = new IntakeSubsystem();
+        mElevator = new ElevatorSubsystem();
         switch (Constants.currentMode) {
             case REAL:
                 // Real robot, instantiate hardware IO implementations
@@ -97,30 +101,12 @@ public class RobotContainer {
      * edu.wpi.first.wpilibj2.command.button.JoystickButton}.
      */
     private void configureButtonBindings() {
-        // Default command, normal field-relative drive
-        drive.setDefaultCommand(DriveCommands.joystickDrive(
-                drive, () -> -controller.getLeftY(), () -> -controller.getLeftX(), () -> controller.getRightX()));
-
-        // Lock to 0° when A button is held
-        controller
-                .a()
-                .whileTrue(DriveCommands.joystickDriveAtAngle(
-                        drive, () -> -controller.getLeftY(), () -> -controller.getLeftX(), () -> new Rotation2d()));
-
-        // Switch to X pattern when X button is pressed
-        controller.x().onTrue(Commands.runOnce(drive::stopWithX, drive));
-
-        // Reset gyro to 0° when B button is pressed
-        controller
-                .b()
-                .onTrue(Commands.runOnce(
-                                () -> drive.setPose(new Pose2d(drive.getPose().getTranslation(), new Rotation2d())),
-                                drive)
-                        .ignoringDisable(true));
     }
 
     private void configureIntakeBindings() {
-        controller.x().whileTrue(mIntake.intakeCmd());
+        controller.x().whileTrue(mElevator.setPIDCmd(ElevatorConstants.setPoints.L1));
+        controller.a().whileTrue(mElevator.upOrDown(5));
+        controller.y().whileTrue(mElevator.upOrDown(-5));
         controller.leftBumper().whileTrue(mIntake.setIntakePivotUpCmd());
         controller.rightBumper().whileTrue(mIntake.setIntakePivotDownCmd());
     }
