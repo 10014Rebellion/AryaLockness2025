@@ -19,9 +19,13 @@ import frc.RebeLib.subsystems.drive.ModuleIO;
 import frc.RebeLib.subsystems.drive.ModuleIOSim;
 import frc.RebeLib.subsystems.drive.ModuleIOTalonFXandFXS;
 import frc.robot.generated.TunerConstants;
+import frc.robot.subsystems.Claw.ClawSubsystem;
 import frc.robot.subsystems.Elevator.ElevatorConstants;
 import frc.robot.subsystems.Elevator.ElevatorSubsystem;
 import frc.robot.subsystems.Intake.IntakeSubsystem;
+import frc.robot.subsystems.Wrist.WristConstants;
+import frc.robot.subsystems.Wrist.WristSubsystem;
+
 import org.littletonrobotics.junction.networktables.LoggedDashboardChooser;
 
 /**
@@ -35,6 +39,8 @@ public class RobotContainer {
     private final IntakeSubsystem mIntake;
     private final ElevatorSubsystem mElevator;
     private final Drive drive;
+    private final WristSubsystem mWrist;
+    private final ClawSubsystem mClaw;
 
     // Controller
     private final CommandXboxController controller = new CommandXboxController(0);
@@ -44,8 +50,12 @@ public class RobotContainer {
 
     /** The container for the robot. Contains subsystems, OI devices, and commands. */
     public RobotContainer() {
+        mWrist = new WristSubsystem();
         mIntake = new IntakeSubsystem();
         mElevator = new ElevatorSubsystem();
+        mClaw = new ClawSubsystem();
+
+
         switch (Constants.currentMode) {
             case REAL:
                 // Real robot, instantiate hardware IO implementations
@@ -104,9 +114,10 @@ public class RobotContainer {
     }
 
     private void configureIntakeBindings() {
-        controller.x().whileTrue(mElevator.setPIDCmd(ElevatorConstants.setPoints.L1));
-        controller.a().whileTrue(mElevator.upOrDown(5));
-        controller.y().whileTrue(mElevator.upOrDown(-5));
+        controller.x().whileTrue(mElevator.setElevatorPIDCmd(ElevatorConstants.setPoints.L1));
+        controller.a().whileTrue(mWrist.setWristPIDCmd(WristConstants.WristSetPoints.L1));
+        controller.y().whileTrue(mClaw.clawIntakeCoralCmd());
+        controller.b().whileTrue(mClaw.clawOuttakeCoralCmd());
         controller.leftBumper().whileTrue(mIntake.setIntakePivotUpCmd());
         controller.rightBumper().whileTrue(mIntake.setIntakePivotDownCmd());
     }

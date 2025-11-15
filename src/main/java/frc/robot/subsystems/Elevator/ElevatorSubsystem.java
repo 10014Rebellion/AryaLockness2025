@@ -43,14 +43,14 @@ public class ElevatorSubsystem extends SubsystemBase{
 
     public boolean isPIDAtGoal() {
         return mPidController.atGoal();
-      }
+    }
 
     public Command upOrDown(double pVolts){
         return new FunctionalCommand(()->{setVolts(pVolts);}, ()->{}, (interrupted)->{setVolts(0);}, ()->false, this);
     }
 
 
-    public Command setPIDCmd(ElevatorConstants.setPoints pSetPoint){
+    public Command setElevatorPIDCmd(ElevatorConstants.setPoints pSetPoint){
         return new FunctionalCommand(
             () -> {
                 mPidController.setGoal(pSetPoint.getPos());
