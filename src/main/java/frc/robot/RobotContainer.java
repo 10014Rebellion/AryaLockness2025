@@ -5,6 +5,7 @@ package frc.robot;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import frc.robot.subsystems.Claw.ClawSubsystem;
 import frc.robot.subsystems.Elevator.ElevatorConstants;
@@ -49,13 +50,10 @@ public class RobotContainer {
     private void configureButtonBindings() {}
 
     private void configureIntakeBindings() {
-        controller.x().whileTrue(mElevator.setElevatorPIDCmd(ElevatorConstants.ElevatorSetpoints.L1));
-        controller.a().whileTrue(mWrist.setWristPIDCmd(WristConstants.WristSetpoints.L1));
-        controller.y().whileTrue(mClaw.clawIntakeCoralCmd());
-        controller.b().whileTrue(mClaw.clawOuttakeCoralCmd());
-        controller.leftBumper().whileTrue(mIntake.setIntakePivotUpCmd());
-        controller.rightBumper().whileTrue(mIntake.setIntakePivotDownCmd());
+        controller.rightTrigger().whileTrue(mElevator.setElevatorPIDCmd(ElevatorConstants.ElevatorSetpoints.L1));
+        controller.leftTrigger().whileTrue(mElevator.setElevatorPIDCmd(ElevatorConstants.ElevatorSetpoints.BOTTOM));
     }
+
 
     /**
      * Use this to pass the autonomous command to the main {@link Robot} class.

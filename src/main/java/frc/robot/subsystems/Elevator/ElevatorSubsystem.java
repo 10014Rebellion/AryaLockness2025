@@ -9,7 +9,6 @@ import com.revrobotics.spark.SparkMax;
 import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.math.controller.ElevatorFeedforward;
 import edu.wpi.first.math.controller.ProfiledPIDController;
-import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.trajectory.TrapezoidProfile.Constraints;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -40,14 +39,14 @@ public class ElevatorSubsystem extends SubsystemBase {
         mEncoder = mElevatorMotor.getEncoder();
     }
 
-    private void setVolts(double pVolts) {
+    public void setVolts(double pVolts) {
         pVolts = MathUtil.clamp(pVolts, -Constants.robotVoltage, Constants.robotVoltage);
         if (isOutOfBounds(pVolts)) mElevatorMotor.setVoltage(0);
         else mElevatorMotor.setVoltage(pVolts);
     }
 
-    private Rotation2d getEncoderReading() {
-        return new Rotation2d(mEncoder.getPosition() * 2 * Math.PI);
+    private double getEncoderInches() {
+        return mEncoder.getPosition() * ElevatorConstants.kPositionConversionFactor;
     }
 
     public boolean isPIDAtGoal() {
@@ -58,11 +57,11 @@ public class ElevatorSubsystem extends SubsystemBase {
         return new FunctionalCommand(
                 () -> {
                     mPidController.setGoal(pSetPoint.getDeg());
-                    mPidController.reset(getEncoderReading().getDegrees());
+                    mPidController.reset(getEncoderInches());
                 },
                 () -> {
                     double pidCalculation =
-                            mPidController.calculate(getEncoderReading().getDegrees());
+                            mPidController.calculate(getEncoderInches());
                     double ffCalc = mElevatorFeedforward.calculate(mPidController.getSetpoint().velocity);
                     setVolts(pidCalculation + ffCalc);
                     SmartDashboard.putNumber("Elevator/ControllerOutput", pidCalculation + ffCalc);
@@ -75,13 +74,13 @@ public class ElevatorSubsystem extends SubsystemBase {
     }
 
     private boolean isOutOfBounds(double pInput) {
-        return (pInput > 0 && getEncoderReading().getDegrees() >= ElevatorConstants.kForwardSoftLimit)
-                || (pInput < 0 && getEncoderReading().getDegrees() <= ElevatorConstants.kReverseSoftLimit);
+        return (pInput > 0 && getEncoderInches() >= ElevatorConstants.kForwardSoftLimit)
+                || (pInput < 0 && getEncoderInches() <= ElevatorConstants.kReverseSoftLimit);
     }
 
     @Override
     public void periodic() {
-        SmartDashboard.putNumber("Elevator/EncoderDeg", getEncoderReading().getDegrees());
+        SmartDashboard.putNumber("Elevator/EncoderDeg", getEncoderInches());
         SmartDashboard.putNumber("Elevator/MotorOutput", mElevatorMotor.getAppliedOutput());
 
         if (isOutOfBounds(mElevatorMotor.getAppliedOutput())) {
