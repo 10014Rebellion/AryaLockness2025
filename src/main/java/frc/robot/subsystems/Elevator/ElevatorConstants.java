@@ -1,8 +1,10 @@
+// REBELLION 10014
+
 package frc.robot.subsystems.Elevator;
 
 import com.revrobotics.spark.SparkLowLevel.MotorType;
-import com.revrobotics.spark.config.SparkMaxConfig;
 import com.revrobotics.spark.config.SparkBaseConfig.IdleMode;
+import com.revrobotics.spark.config.SparkMaxConfig;
 
 public class ElevatorConstants {
     public static final int kElevatorID = 41;
@@ -12,9 +14,8 @@ public class ElevatorConstants {
     public static boolean kInverted = true;
     public static int kSmartCurrentLimit = 50;
     public static SparkMaxConfig kElevatorConfig = new SparkMaxConfig();
-    
+
     public static double kP = 1.0;
-    public static double kI = 0.0;
     public static double kD = 0.0;
     public static double kMaxAcceleration = 950; // 250;
     public static double kMaxVelocity = 2400; // 500;
@@ -27,31 +28,28 @@ public class ElevatorConstants {
     public static double kReverseSoftLimit = 0;
     public static double kPositionConversionFactor = 1.21875; // 1.0 / kDrumCircumference
 
-
     static {
-        kElevatorConfig.idleMode(kIdleMode).smartCurrentLimit(kSmartCurrentLimit).inverted(kInverted);
+        kElevatorConfig
+                .idleMode(kIdleMode)
+                .smartCurrentLimit(kSmartCurrentLimit)
+                .inverted(kInverted);
     }
 
-    public enum setPoints {
-
+    public enum ElevatorSetpoints {
         BOTTOM(0),
         L1(27),
         L2(7),
         L3(25.0),
         L4(48);
 
-        public final double setPoint;
+        private final double mSetpointDeg;
 
-        private setPoints(double setPoint){
-            this.setPoint = setPoint;
+        private ElevatorSetpoints(double pSetpointDeg) {
+            this.mSetpointDeg = pSetpointDeg;
         }
 
-        public double getPos(){
-            return this.setPoint;
+        public double getDeg() {
+            return this.mSetpointDeg;
         }
-
-
     }
-
 }
-
