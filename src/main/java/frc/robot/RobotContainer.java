@@ -13,6 +13,7 @@ import frc.robot.subsystems.Elevator.ElevatorSubsystem;
 import frc.robot.subsystems.Intake.IntakeSubsystem;
 import frc.robot.subsystems.Wrist.WristConstants;
 import frc.robot.subsystems.Wrist.WristSubsystem;
+import frc.robot.subsystems.Wrist.WristConstants.WristSetpoints;
 
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a
@@ -50,10 +51,11 @@ public class RobotContainer {
     private void configureButtonBindings() {}
 
     private void configureIntakeBindings() {
-        controller.rightTrigger().whileTrue(mElevator.setElevatorPIDCmd(ElevatorConstants.ElevatorSetpoints.L1));
-        controller.leftTrigger().whileTrue(mElevator.setElevatorPIDCmd(ElevatorConstants.ElevatorSetpoints.BOTTOM));
+        //controller.rightTrigger().whileTrue(mElevator.setElevatorPIDCmd(ElevatorConstants.ElevatorSetpoints.L1));
+        controller.leftTrigger().onTrue(mWrist.setWristPIDCmd(WristConstants.WristSetpoints.BOTTOM));
+        controller.rightTrigger().onTrue(mWrist.setWristPIDCmd(WristConstants.WristSetpoints.TEST_90));
+        
     }
-
 
     /**
      * Use this to pass the autonomous command to the main {@link Robot} class.

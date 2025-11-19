@@ -149,6 +149,6 @@ public class IntakeSubsystem extends SubsystemBase {
     @Override
     public void periodic() {
         stopIfLimitIntakePivot();
-        SmartDashboard.putNumber("Arm/Encoder Reading", getEncoderReading());
+        SmartDashboard.putNumber("Intake/Encoder Reading", getEncoderReading());
     }
 }

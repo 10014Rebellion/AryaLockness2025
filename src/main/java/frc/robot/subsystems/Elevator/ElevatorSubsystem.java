@@ -56,12 +56,11 @@ public class ElevatorSubsystem extends SubsystemBase {
     public Command setElevatorPIDCmd(ElevatorConstants.ElevatorSetpoints pSetPoint) {
         return new FunctionalCommand(
                 () -> {
-                    mPidController.setGoal(pSetPoint.getDeg());
+                    mPidController.setGoal(pSetPoint.getInches());
                     mPidController.reset(getEncoderInches());
                 },
                 () -> {
-                    double pidCalculation =
-                            mPidController.calculate(getEncoderInches());
+                    double pidCalculation = mPidController.calculate(getEncoderInches());
                     double ffCalc = mElevatorFeedforward.calculate(mPidController.getSetpoint().velocity);
                     setVolts(pidCalculation + ffCalc);
                     SmartDashboard.putNumber("Elevator/ControllerOutput", pidCalculation + ffCalc);
@@ -82,6 +81,7 @@ public class ElevatorSubsystem extends SubsystemBase {
     public void periodic() {
         SmartDashboard.putNumber("Elevator/EncoderDeg", getEncoderInches());
         SmartDashboard.putNumber("Elevator/MotorOutput", mElevatorMotor.getAppliedOutput());
+        SmartDashboard.putBoolean("Elevator/isGoal", isPIDAtGoal());
 
         if (isOutOfBounds(mElevatorMotor.getAppliedOutput())) {
             setVolts(0);

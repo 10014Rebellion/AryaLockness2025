@@ -42,14 +42,14 @@ public class ElevatorConstants {
         L3(25.0),
         L4(48);
 
-        private final double mSetpointDeg;
+        private final double mSetpointInches;
 
-        private ElevatorSetpoints(double pSetpointDeg) {
-            this.mSetpointDeg = pSetpointDeg;
+        private ElevatorSetpoints(double pSetpointInches) {
+            this.mSetpointInches = pSetpointInches;
         }
 
-        public double getDeg() {
-            return this.mSetpointDeg;
+        public double getInches() {
+            return this.mSetpointInches;
         }
     }
 }
