@@ -2,14 +2,10 @@
 
 package frc.robot.subsystems.Wrist;
 
-import static edu.wpi.first.units.Units.Rotation;
-
 import com.revrobotics.spark.SparkLowLevel.MotorType;
 import com.revrobotics.spark.config.SparkBaseConfig.IdleMode;
-
-import edu.wpi.first.math.geometry.Rotation2d;
-
 import com.revrobotics.spark.config.SparkFlexConfig;
+import edu.wpi.first.math.geometry.Rotation2d;
 
 public class WristConstants {
     public static int kWristID = 42;
@@ -48,6 +44,7 @@ public class WristConstants {
     public enum WristSetpoints {
         BOTTOM(0),
         TEST_90(80),
+        INTAKE(-87),
         L1(-30),
         L2(46 + 6),
         L3(46 + 6),

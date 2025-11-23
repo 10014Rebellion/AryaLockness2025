@@ -40,7 +40,10 @@ public class ElevatorConstants {
         L1(27),
         L2(7),
         L3(25.0),
-        L4(48);
+        L4(48),
+        HPINTAKE(2),
+        PREINTAKE(25.0),
+        POSTINTAKE(16.6);
 
         private final double mSetpointInches;
 

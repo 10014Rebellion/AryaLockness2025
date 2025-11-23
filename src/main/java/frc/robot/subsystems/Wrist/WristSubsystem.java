@@ -40,8 +40,6 @@ public class WristSubsystem extends SubsystemBase {
                 new ArmFeedforward(WristConstants.kS, WristConstants.kG, WristConstants.kV, WristConstants.kA);
 
         mEncoder = new DutyCycleEncoder(1);
-        
-        
     }
 
     public void setVolts(double pVolts) {
@@ -52,7 +50,9 @@ public class WristSubsystem extends SubsystemBase {
     }
 
     private Rotation2d getEncoderReading() {
-        return Rotation2d.fromRotations(mEncoder.get()).minus(WristConstants.kArmEncoderOffset).times(WristConstants.kInvertedEncoder ? -1 : 1);
+        return Rotation2d.fromRotations(mEncoder.get())
+                .minus(WristConstants.kArmEncoderOffset)
+                .times(WristConstants.kInvertedEncoder ? -1 : 1);
     }
 
     private boolean isPIDAtGoal() {
