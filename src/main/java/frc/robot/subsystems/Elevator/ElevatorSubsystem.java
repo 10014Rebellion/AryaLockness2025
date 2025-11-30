@@ -53,6 +53,19 @@ public class ElevatorSubsystem extends SubsystemBase {
         return mPidController.atGoal();
     }
 
+    public Command elevatorVoltCmd(double pVolts){
+        return new FunctionalCommand(
+            ()->{
+                setVolts(pVolts);
+            },
+            ()->{},
+            (interrupted)->{
+                setVolts(mElevatorFeedforward.calculate(mPidController.getSetpoint().velocity));
+            },
+            ()->false,
+            this);
+    }
+
     public Command setElevatorPIDCmd(ElevatorConstants.ElevatorSetpoints pSetPoint) {
         return new FunctionalCommand(
                 () -> {
@@ -66,7 +79,7 @@ public class ElevatorSubsystem extends SubsystemBase {
                     SmartDashboard.putNumber("Elevator/ControllerOutput", pidCalculation + ffCalc);
                 },
                 (interrupted) -> {
-                    setVolts(0);
+                    setVolts(mElevatorFeedforward.calculate(mPidController.getSetpoint().velocity));
                 },
                 () -> isPIDAtGoal(),
                 this);

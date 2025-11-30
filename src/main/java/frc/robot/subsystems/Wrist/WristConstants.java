@@ -11,7 +11,7 @@ public class WristConstants {
     public static int kWristID = 42;
 
     public static MotorType kMotorType = MotorType.kBrushless;
-    public static IdleMode kIdleMode = IdleMode.kCoast;
+    public static IdleMode kIdleMode = IdleMode.kBrake;
 
     public static boolean kInverted = true;
     public static boolean kInvertedEncoder = true;
@@ -23,8 +23,8 @@ public class WristConstants {
     public static Rotation2d kReverseSoftLimit = Rotation2d.fromDegrees(-90);
     public static Rotation2d kArmEncoderOffset = Rotation2d.fromRotations(0.545);
 
-    public static double kP = 0.18;
-    public static double kD = 0.0;
+    public static double kP = 0.22;
+    public static double kD = 0.01;
 
     public static double kMaxAcceleration = 500; // was 500. k0inda slow
     public static double kMaxVelocity = 700;

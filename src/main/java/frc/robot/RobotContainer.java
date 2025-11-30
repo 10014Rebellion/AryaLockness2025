@@ -6,8 +6,10 @@ import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
+import frc.robot.controls.Bindings;
 import frc.robot.subsystems.Claw.ClawSubsystem;
 import frc.robot.subsystems.Elevator.ElevatorSubsystem;
+import frc.robot.subsystems.Elevator.ElevatorConstants.ElevatorSetpoints;
 import frc.robot.subsystems.Intake.IntakeSubsystem;
 import frc.robot.subsystems.Wrist.WristConstants;
 import frc.robot.subsystems.Wrist.WristSubsystem;
@@ -20,21 +22,15 @@ import frc.robot.subsystems.Wrist.WristSubsystem;
  */
 public class RobotContainer {
     // Subsystems
-    private final IntakeSubsystem mIntake;
-    private final ElevatorSubsystem mElevator;
-    private final WristSubsystem mWrist;
-    private final ClawSubsystem mClaw;
+    private final Bindings mBind;
 
     // Controller
     private final CommandXboxController controller = new CommandXboxController(0);
 
     /** The container for the robot. Contains subsystems, OI devices, and commands. */
     public RobotContainer() {
-        mWrist = new WristSubsystem();
-        mIntake = new IntakeSubsystem();
-        mElevator = new ElevatorSubsystem();
-        mClaw = new ClawSubsystem();
 
+        mBind = new Bindings();
         configureButtonBindings();
     }
 
@@ -44,7 +40,9 @@ public class RobotContainer {
      * edu.wpi.first.wpilibj.Joystick} or {@link XboxController}), and then passing it to a {@link
      * edu.wpi.first.wpilibj2.command.button.JoystickButton}.
      */
-    private void configureButtonBindings() {}
+    private void configureButtonBindings() {
+        mBind.initBindings();
+    }
 
 
     /**

@@ -44,7 +44,9 @@ public class IntakeSubsystem extends SubsystemBase {
         // Roller Motor
         this.mIntakeRollerMotor = new TalonFX(IntakeConstants.kRollerID, "drivetrain");
         mIntakeRollerMotor.getConfigurator().apply(new TalonFXConfiguration());
-        TalonFXConfiguration rollerConfig = new TalonFXConfiguration();
+        TalonFXConfiguration
+        
+        rollerConfig = new TalonFXConfiguration();
         
         // Apply configurations
         rollerConfig.CurrentLimits.SupplyCurrentLimitEnable = true;
@@ -177,5 +179,6 @@ public class IntakeSubsystem extends SubsystemBase {
     public void periodic() {
         stopIfLimitIntakePivot();
         SmartDashboard.putNumber("Intake/Encoder Reading Degrees", getEncoderReading().getDegrees());
+        SmartDashboard.putBoolean("Intake/HasPieceCompletely", hasPieceCompletely());
     }
 }

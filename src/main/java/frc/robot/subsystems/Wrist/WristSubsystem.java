@@ -14,9 +14,11 @@ import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.DutyCycleEncoder;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.FunctionalCommand;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
+import frc.robot.subsystems.Wrist.WristConstants.WristSetpoints;
 
 public class WristSubsystem extends SubsystemBase {
     private final SparkFlex mWristMotor;
@@ -79,9 +81,12 @@ public class WristSubsystem extends SubsystemBase {
                     setVolts(calculation + ffCalc);
                 },
                 (interrupted) -> {
-                    setVolts(0);
+                    Commands.print("I got interrupted");
+                    setVolts(mArmFeedforward.calculate(
+                        Units.degreesToRadians(mPidController.getSetpoint().position),
+                        Units.degreesToRadians(mPidController.getSetpoint().velocity)));
                 },
-                () -> false,
+                () -> isPIDAtGoal(),
                 this);
     }
 
@@ -91,5 +96,9 @@ public class WristSubsystem extends SubsystemBase {
             setVolts(0);
         }
         SmartDashboard.putNumber("Wrist/EncoderReadingDeg", getEncoderReading().getDegrees());
+        SmartDashboard.putNumber("Wrist/Setpoint90", WristSetpoints.TEST_90.getDeg());
+        SmartDashboard.putNumber("Wrist/SetpointL4", WristSetpoints.L4.getDeg());
+
+        SmartDashboard.putBoolean("Wrist/isGoal", isPIDAtGoal());
     }
 }

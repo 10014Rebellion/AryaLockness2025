@@ -10,7 +10,7 @@ public class ElevatorConstants {
     public static final int kElevatorID = 41;
 
     public static MotorType kMotorType = MotorType.kBrushless;
-    public static IdleMode kIdleMode = IdleMode.kCoast;
+    public static IdleMode kIdleMode = IdleMode.kBrake;
     public static boolean kInverted = true;
     public static int kSmartCurrentLimit = 50;
     public static SparkMaxConfig kElevatorConfig = new SparkMaxConfig();
@@ -41,9 +41,8 @@ public class ElevatorConstants {
         L2(7),
         L3(25.0),
         L4(48),
-        HPINTAKE(2),
         PREINTAKE(25.0),
-        POSTINTAKE(16.6);
+        POSTINTAKE(15.6);
 
         private final double mSetpointInches;
 

@@ -14,6 +14,7 @@ public class ClawConstants {
     public static int kSmartCurrentLimit = 60;
     public static SparkFlexConfig kClawConfig = new SparkFlexConfig();
     public static int kBeamBrakeID = 5;
+    public static int kCANRangeID = 55;
 
     static {
         kClawConfig.idleMode(kIdleMode).smartCurrentLimit(60).inverted(kInverted);
