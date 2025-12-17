@@ -63,11 +63,11 @@ public class ClawSubsystem extends SubsystemBase {
     public Command clawIntakeCoralCmd() {
         return new FunctionalCommand(
                 () -> {
-                    setVolts(ClawConstants.ClawIntakeVolts.INTAKE_CORAL.getIntakeVolts());
+                    setVolts(ClawConstants.ClawVolts.INTAKE_CORAL.getClawVolts());
                 },
                 () -> {},
                 (interrupted) -> {
-                    setVolts(ClawConstants.ClawIntakeVolts.HOLD_CORAL.getIntakeVolts());
+                    setVolts(ClawConstants.ClawVolts.HOLD_CORAL.getClawVolts());
                 },
                 () -> canRangeHasPiece(),
                 this);
@@ -76,10 +76,10 @@ public class ClawSubsystem extends SubsystemBase {
     public Command clawOuttakeCoralCmd() {
         return new FunctionalCommand(
                 () -> {
-                    setVolts(ClawConstants.ClawIntakeVolts.OUTTAKE_REEF.getIntakeVolts());
+                    setVolts(ClawConstants.ClawVolts.OUTTAKE_REEF.getClawVolts());
                 },
                 () -> {
-                    setVolts(ClawConstants.ClawIntakeVolts.OUTTAKE_REEF.getIntakeVolts());
+                    setVolts(ClawConstants.ClawVolts.OUTTAKE_REEF.getClawVolts());
                 },
                 (interrupted) -> {
                     setVolts(0);
